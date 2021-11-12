@@ -109,8 +109,8 @@
 		var Right_X_positive_angle, Left_X_positive_angle;
 		var Right_Y_negative_angle, Left_Y_negative_angle;
 		var Right_Y_positive_angle, Left_Y_positive_angle;
-		var rotation_angle_X = [[-10.4, 8.6], [-17, 15], [-13, 17.5]];
-		var rotation_angle_Y = [[-13, 7.6], [-21, 10], [-16.5, 11.5]];
+		var angle_X = [[-10.4, 8.6], [-17, 15], [-13, 17.5]];
+		var angle_Y = [[-13, 7.6], [-21, 10], [-16.5, 11.5]];
 		var mousePosition = new THREE.Vector2();
 		var eye_selection = 0;
 		var camera_num = 0;
@@ -187,7 +187,7 @@
 
 			}, onProgress, null);
 
-			get_EyePosition("./eyePos_json/Model01.json");
+			get_EyePosition("./eye_label/Model01.json");
 
 			// 
 			window.addEventListener('click', PointerDown, false);
@@ -296,7 +296,7 @@
 					camera3.position.y = y_camera_h[MMD_id];
 					camera4.position.y = y_camera_h[MMD_id];
 					camera5.position.y = y_camera_h[MMD_id];
-					filename = "./eyePos_json/Model0" + String(MMD_id + 1) + ".json";
+					filename = "./eye_label/Model0" + String(MMD_id + 1) + ".json";
 					read_MMD(MMD_id);
 					get_EyePosition(filename);
 					break;
@@ -310,7 +310,7 @@
 					camera3.position.y = y_camera_h[MMD_id];
 					camera4.position.y = y_camera_h[MMD_id];
 					camera5.position.y = y_camera_h[MMD_id];
-					filename = "./eyePos_json/Model0" + String(MMD_id + 1) + ".json";
+					filename = "./eye_label/Model0" + String(MMD_id + 1) + ".json";
 					read_MMD(MMD_id);
 					get_EyePosition(filename);
 					break;
@@ -330,16 +330,16 @@
 							Right_X_positive_angle = Left_X_positive_angle;
 							break;
 						case 4:
-							Left_Y_negative_angle = Right_Y_negative_angle - (rotation_angle_Y[MMD_id][1] + rotation_angle_Y[MMD_id][0]) * Math.PI / 180;
+							Left_Y_negative_angle = Right_Y_negative_angle - (angle_Y[MMD_id][1] + angle_Y[MMD_id][0]) * Math.PI / 180;
 							break;
 						case 5:
-							Right_Y_negative_angle = Left_Y_negative_angle + (rotation_angle_Y[MMD_id][1] + rotation_angle_Y[MMD_id][0]) * Math.PI / 180;
+							Right_Y_negative_angle = Left_Y_negative_angle + (angle_Y[MMD_id][1] + angle_Y[MMD_id][0]) * Math.PI / 180;
 							break;
 						case 6:
-							Left_Y_positive_angle = Right_Y_positive_angle - (rotation_angle_Y[MMD_id][1] + rotation_angle_Y[MMD_id][0]) * Math.PI / 180;
+							Left_Y_positive_angle = Right_Y_positive_angle - (angle_Y[MMD_id][1] + angle_Y[MMD_id][0]) * Math.PI / 180;
 							break;
 						case 7:
-							Right_Y_positive_angle = Left_Y_positive_angle + (rotation_angle_Y[MMD_id][1] + rotation_angle_Y[MMD_id][0]) * Math.PI / 180;
+							Right_Y_positive_angle = Left_Y_positive_angle + (angle_Y[MMD_id][1] + angle_Y[MMD_id][0]) * Math.PI / 180;
 							break;
 					}
 					break;
@@ -518,15 +518,15 @@
 			mouse.x = mousePos.x;
 			mouse.y = mousePos.y;
 
-			var angle_range = rotation_angle_X[MMD_id][1] - rotation_angle_X[MMD_id][0];
-			var angle_mid = rotation_angle_X[MMD_id][1] + rotation_angle_X[MMD_id][0];
+			var angle_range = angle_X[MMD_id][1] - angle_X[MMD_id][0];
+			var angle_mid = angle_X[MMD_id][1] + angle_X[MMD_id][0];
 			var degree = - mouse.y * (angle_range / 2) + (angle_mid / 2);
 
-			if (degree < rotation_angle_X[MMD_id][0]) {
-				iris_rotation_x = rotation_angle_X[MMD_id][0] * Math.PI / 180;
+			if (degree < angle_X[MMD_id][0]) {
+				iris_rotation_x = angle_X[MMD_id][0] * Math.PI / 180;
 			}
-			else if (degree > rotation_angle_X[MMD_id][1]) {
-				iris_rotation_x = rotation_angle_X[MMD_id][1] * Math.PI / 180;
+			else if (degree > angle_X[MMD_id][1]) {
+				iris_rotation_x = angle_X[MMD_id][1] * Math.PI / 180;
 			}
 			else {
 				iris_rotation_x = degree * Math.PI / 180;
@@ -553,8 +553,8 @@
 			mouse.x = mousePos.x;
 			mouse.y = mousePos.y;
 
-			var angle_range = Math.abs(rotation_angle_Y[MMD_id][1] - rotation_angle_Y[MMD_id][0]);
-			var angle_mid = rotation_angle_Y[MMD_id][1] + rotation_angle_Y[MMD_id][0];
+			var angle_range = Math.abs(angle_Y[MMD_id][1] - angle_Y[MMD_id][0]);
+			var angle_mid = angle_Y[MMD_id][1] + angle_Y[MMD_id][0];
 			var degree;
 			var MouseX = (mouse.x + 0.5) * 2;
 			if (MouseX >= 1) {
@@ -568,11 +568,11 @@
 				case 4:
 					degree = MouseX * (angle_range / 2) + (angle_mid / 2);
 
-					if (degree < rotation_angle_Y[MMD_id][0]) {
-						iris_rotation_y = rotation_angle_Y[MMD_id][0] * Math.PI / 180;
+					if (degree < angle_Y[MMD_id][0]) {
+						iris_rotation_y = angle_Y[MMD_id][0] * Math.PI / 180;
 					}
-					else if (degree > rotation_angle_Y[MMD_id][1]) {
-						iris_rotation_y = rotation_angle_Y[MMD_id][1] * Math.PI / 180;
+					else if (degree > angle_Y[MMD_id][1]) {
+						iris_rotation_y = angle_Y[MMD_id][1] * Math.PI / 180;
 					}
 					else {
 						iris_rotation_y = degree * Math.PI / 180;
@@ -582,11 +582,11 @@
 				case 5:
 					degree = MouseX * (angle_range / 2) - (angle_mid / 2);
 
-					if (degree < -rotation_angle_Y[MMD_id][1]) {
-						iris_rotation_y = -rotation_angle_Y[MMD_id][1] * Math.PI / 180;
+					if (degree < -angle_Y[MMD_id][1]) {
+						iris_rotation_y = -angle_Y[MMD_id][1] * Math.PI / 180;
 					}
-					else if (degree > -rotation_angle_Y[MMD_id][0]) {
-						iris_rotation_y = -rotation_angle_Y[MMD_id][0] * Math.PI / 180;
+					else if (degree > -angle_Y[MMD_id][0]) {
+						iris_rotation_y = -angle_Y[MMD_id][0] * Math.PI / 180;
 					}
 					else {
 						iris_rotation_y = degree * Math.PI / 180;
@@ -596,11 +596,11 @@
 				case 6:
 					degree = MouseX * (angle_range / 2) + (angle_mid / 2);
 
-					if (degree < rotation_angle_Y[MMD_id][0]) {
-						iris_rotation_y = rotation_angle_Y[MMD_id][0] * Math.PI / 180;
+					if (degree < angle_Y[MMD_id][0]) {
+						iris_rotation_y = angle_Y[MMD_id][0] * Math.PI / 180;
 					}
-					else if (degree > rotation_angle_Y[MMD_id][1]) {
-						iris_rotation_y = rotation_angle_Y[MMD_id][1] * Math.PI / 180;
+					else if (degree > angle_Y[MMD_id][1]) {
+						iris_rotation_y = angle_Y[MMD_id][1] * Math.PI / 180;
 					}
 					else {
 						iris_rotation_y = degree * Math.PI / 180;
@@ -610,11 +610,11 @@
 				case 7:
 					degree = MouseX * (angle_range / 2) - (angle_mid / 2);
 
-					if (degree < -rotation_angle_Y[MMD_id][1]) {
-						iris_rotation_y = -rotation_angle_Y[MMD_id][1] * Math.PI / 180;
+					if (degree < -angle_Y[MMD_id][1]) {
+						iris_rotation_y = -angle_Y[MMD_id][1] * Math.PI / 180;
 					}
-					else if (degree > -rotation_angle_Y[MMD_id][0]) {
-						iris_rotation_y = -rotation_angle_Y[MMD_id][0] * Math.PI / 180;
+					else if (degree > -angle_Y[MMD_id][0]) {
+						iris_rotation_y = -angle_Y[MMD_id][0] * Math.PI / 180;
 					}
 					else {
 						iris_rotation_y = degree * Math.PI / 180;
